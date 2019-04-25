@@ -47,21 +47,21 @@ int main(int argc, char **argv)
     }
 
     /* Setup the IP address */
-    strcpy(serverIP, argv[2]);
+    strcpy(serverIP, argv[1]);
 
     /* Setup TCP port number */
-    portNum = atoi(argv[3]);
+    portNum = atoi(argv[2]);
     /* Setup the client socket */
     if ((mySocket = setupTCPClient(serverIP, portNum)) < 0)
     {
         return -1;
     }
     sBANK_PROTOCOL bank;
-    bank.trans =  *argv[4];
-    bank.acctnum = *argv[5];
- //   bank.value = *argv[6];
-    send(mySocket, &bank, sizeof(sBANK_PROTOCOL), 0);
-     recv(mySocket, recvBuff, 1023, 0);
-      printf("Received:\n%s\n", recvBuff);
+    bank.trans =  *argv[3];
+    bank.acctnum = *argv[4];
+    bank.value = *argv[5];
+    send(mySocket, &bank, sizeof(bank), 0);
+    recv(mySocket, recvBuff, 1023, 0);
+    printf("Received:\n%s\n", recvBuff);
     close(mySocket);
 }
