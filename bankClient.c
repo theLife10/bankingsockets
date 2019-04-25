@@ -57,11 +57,18 @@ int main(int argc, char **argv)
         return -1;
     }
     sBANK_PROTOCOL bank;
-    bank.trans =  *argv[3];
-    bank.acctnum = *argv[4];
-    bank.value = *argv[5];
+    bank.trans =  atoi(argv[3]);
+    printf("trans %d\n",bank.trans);
+    bank.acctnum = atoi(argv[4]);
+     printf("acct %d\n",bank.acctnum);
+    bank.value = atoi(argv[5]);
+     printf("value %d\n",bank.value);
     send(mySocket, &bank, sizeof(bank), 0);
-    recv(mySocket, recvBuff, 1023, 0);
-    printf("Received:\n%s\n", recvBuff);
+   recv(mySocket,  &bank, sizeof(bank), 0);
+    printf("Received trans:\n%d\n",bank.trans);
+    printf("recieved acct: \n%d\n", bank.acctnum);
+    printf("recieved value: \n%d\n", bank.value);
+     printf("Received buff len:\n%ld\n",sizeof(recvBuff));
+
     close(mySocket);
 }
