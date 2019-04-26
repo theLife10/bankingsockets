@@ -56,19 +56,36 @@ int main(int argc, char **argv)
     {
         return -1;
     }
-    sBANK_PROTOCOL bank;
-    bank.trans =  atoi(argv[3]);
-    printf("trans %d\n",bank.trans);
-    bank.acctnum = atoi(argv[4]);
-     printf("acct %d\n",bank.acctnum);
-    bank.value = atoi(argv[5]);
-     printf("value %d\n",bank.value);
-    send(mySocket, &bank, sizeof(bank), 0);
-   recv(mySocket,  &bank, sizeof(bank), 0);
-    printf("Received trans:\n%d\n",bank.trans);
-    printf("recieved acct: \n%d\n", bank.acctnum);
-    printf("recieved value: \n%d\n", bank.value);
-     printf("Received buff len:\n%ld\n",sizeof(recvBuff));
+   sBANK_PROTOCOL bank;
+   if(*argv[3] == 'D'){
+       bank.trans = BANK_TRANS_DEPOSIT;
+       bank.acctnum = atoi(argv[4]);
+       bank.value =  atoi(argv[5]);
 
+       send(mySocket, &bank, sizeof(bank), 0);
+       recv(mySocket,  &bank, sizeof(bank), 0);
+
+
+       printf("\n You are depositing in account number: %d \n",bank.acctnum);
+       printf("\n You are depositing: %d \n",bank.value);
+   }
+     if(*argv[3] == 'W'){
+        bank.trans =  BANK_TRANS_WITHDRAW;
+         bank.acctnum = atoi(argv[4]);
+          bank.value =  atoi(argv[5]);
+         send(mySocket, &bank, sizeof(bank), 0);
+       recv(mySocket,  &bank, sizeof(bank), 0);
+        printf("\n You are withdrawing in account number: %d \n",bank.acctnum);
+         printf("\n You are withdrawing: %d \n",bank.value);
+      }
+
+       if(*argv[3] == 'B'){
+         bank.trans =  BANK_TRANS_INQUIRY;    
+         bank.acctnum = atoi(argv[4]);
+         bank.value =  atoi(argv[5]);
+         send(mySocket, &bank, sizeof(bank), 0);
+         recv(mySocket,  &bank, sizeof(bank), 0);
+         printf("\n Your current balance in account number: %d is %d \n",bank.acctnum,bank.value);
+       }
     close(mySocket);
 }
