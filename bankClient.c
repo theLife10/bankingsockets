@@ -56,6 +56,11 @@ int main(int argc, char **argv)
     {
         return -1;
     }
+    printf("\nWelcome to Wells Fargo!\n");
+    printf("\nHere are the instructions: \n");
+    printf("\nB is for balance\n");
+    printf("\nW is for withdraw\n");
+    printf("\nD is for deposit\n");
    sBANK_PROTOCOL bank;
    if(*argv[3] == 'D'){
        bank.trans = BANK_TRANS_DEPOSIT;
