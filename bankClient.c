@@ -56,11 +56,21 @@ int main(int argc, char **argv)
     {
         return -1;
     }
+     printf("\n///////////////////////////////////////////////////\n");
     printf("\nWelcome to Wells Fargo!\n");
     printf("\nHere are the instructions: \n");
+     printf("\n///////////////////////////////////////////////////\n");
+    printf("\n IPAdress will be 129.108.32.2 26207  \n");
+    printf("\n Port number will be 26207  \n");
+     printf("\n///////////////////////////////////////////////////\n");
     printf("\nB is for balance\n");
     printf("\nW is for withdraw\n");
     printf("\nD is for deposit\n");
+    printf("\n///////////////////////////////////////////////////\n");
+    printf("\n Enter the Account number you want to DEPOSIT/WITHDRAW/CHECK BALANCE FROM \n");
+    printf("\n Enter the amount you want to deposit/withdraw\n");
+   printf("\n///////////////////////////////////////////////////\n");
+
    sBANK_PROTOCOL bank;
    if(*argv[3] == 'D'){
        bank.trans = BANK_TRANS_DEPOSIT;
@@ -70,7 +80,7 @@ int main(int argc, char **argv)
        send(mySocket, &bank, sizeof(bank), 0);
        recv(mySocket,  &bank, sizeof(bank), 0);
 
-
+       printf("\nTransaction: Deposit\n");
        printf("\n You are depositing in account number: %d \n",bank.acctnum);
        printf("\n You are depositing: %d \n",bank.value);
    }
@@ -80,6 +90,7 @@ int main(int argc, char **argv)
           bank.value =  atoi(argv[5]);
          send(mySocket, &bank, sizeof(bank), 0);
        recv(mySocket,  &bank, sizeof(bank), 0);
+       printf("\nTransaction:Withdrawing\n");
         printf("\n You are withdrawing in account number: %d \n",bank.acctnum);
          printf("\n You are withdrawing: %d \n",bank.value);
       }
@@ -90,7 +101,10 @@ int main(int argc, char **argv)
          bank.value =  atoi(argv[5]);
          send(mySocket, &bank, sizeof(bank), 0);
          recv(mySocket,  &bank, sizeof(bank), 0);
+         printf("\n Transaction:Checking Balance\n");
          printf("\n Your current balance in account number: %d is %d \n",bank.acctnum,bank.value);
        }
     close(mySocket);
 }
+
+
