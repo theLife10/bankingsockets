@@ -57,7 +57,6 @@ int main(int argc, char **argv)
         return -1;
     }
      printf("\n///////////////////////////////////////////////////\n");
-    printf("\nWelcome to Wells Fargo!\n");
     printf("\nHere are the instructions: \n");
      printf("\n///////////////////////////////////////////////////\n");
     printf("\n IPAdress will be 129.108.32.2 26207  \n");
@@ -70,41 +69,41 @@ int main(int argc, char **argv)
     printf("\n Enter the Account number you want to DEPOSIT/WITHDRAW/CHECK BALANCE FROM \n");
     printf("\n Enter the amount you want to deposit/withdraw\n");
    printf("\n///////////////////////////////////////////////////\n");
-
+    
+    //initalizing the bank protocol
    sBANK_PROTOCOL bank;
+   //checks transaction is a deposit
    if(*argv[3] == 'D'){
-       bank.trans = BANK_TRANS_DEPOSIT;
-       bank.acctnum = atoi(argv[4]);
-       bank.value =  atoi(argv[5]);
+       bank.trans = BANK_TRANS_DEPOSIT; //assigns the transaction to be Deposit
+       bank.acctnum = atoi(argv[4]); // assigns the account number
+       bank.value =  atoi(argv[5]); // assigns the amount of the deposit
 
-       send(mySocket, &bank, sizeof(bank), 0);
-       recv(mySocket,  &bank, sizeof(bank), 0);
+       send(mySocket, &bank, sizeof(bank), 0); // sends socket, bank protocol, sizeof bankprotocol,def:0
+       recv(mySocket,  &bank, sizeof(bank), 0); // recieves socket, bank protocol, size of bank, def:0
 
        printf("\nTransaction: Deposit\n");
        printf("\n You are depositing in account number: %d \n",bank.acctnum);
-       printf("\n You are depositing: %d \n",bank.value);
+       printf("\n You are depositing: %d cents \n",bank.value);
    }
+     //check if arguement is w = withdraw 
      if(*argv[3] == 'W'){
-        bank.trans =  BANK_TRANS_WITHDRAW;
-         bank.acctnum = atoi(argv[4]);
-          bank.value =  atoi(argv[5]);
-         send(mySocket, &bank, sizeof(bank), 0);
-       recv(mySocket,  &bank, sizeof(bank), 0);
+        bank.trans =  BANK_TRANS_WITHDRAW; // assigns transaction to be withdraw
+         bank.acctnum = atoi(argv[4]); // assigns the account number 
+          bank.value =  atoi(argv[5]); // value you want to withdraw
+         send(mySocket, &bank, sizeof(bank), 0); // sends the socket, size, def:0
+       recv(mySocket,  &bank, sizeof(bank), 0); // recieves the socket, bank protocol, size, def:0
        printf("\nTransaction:Withdrawing\n");
         printf("\n You are withdrawing in account number: %d \n",bank.acctnum);
-         printf("\n You are withdrawing: %d \n",bank.value);
+         printf("\n You are withdrawing: %d cents \n",bank.value);
       }
-
+        //checks if arguement is balance
        if(*argv[3] == 'B'){
-         bank.trans =  BANK_TRANS_INQUIRY;    
-         bank.acctnum = atoi(argv[4]);
-         bank.value =  atoi(argv[5]);
-         send(mySocket, &bank, sizeof(bank), 0);
-         recv(mySocket,  &bank, sizeof(bank), 0);
+         bank.trans =  BANK_TRANS_INQUIRY; //assigns the transaction to be bank inquiry   
+         bank.acctnum = atoi(argv[4]); // argument assigns the account number
+         send(mySocket, &bank, sizeof(bank), 0); //sends the socket, bank protocol, size of protocol, def:0
+         recv(mySocket,  &bank, sizeof(bank), 0); //recieves socket, bank protocol, size of protocol, def: 0
          printf("\n Transaction:Checking Balance\n");
-         printf("\n Your current balance in account number: %d is %d \n",bank.acctnum,bank.value);
+         printf("\n Your current balance in account number: %d is %d cents \n",bank.acctnum,bank.value);
        }
     close(mySocket);
 }
-
-
